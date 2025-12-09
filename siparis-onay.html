@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="dark" lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Sipariş Onayı - Fitness Platform</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            animation: confetti 3s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-background-dark font-display">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-sm border-b border-[#222f49]">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-10 py-3">
+            <div class="flex items-center justify-center">
+                <a href="index.html" class="flex items-center gap-4 text-white">
+                    <div class="size-6 text-primary">
+                        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd"
+                                d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z"
+                                fill="currentColor" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-lg font-bold">FitnessMarka</h2>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20 min-h-screen flex items-center justify-center px-4">
+        <div class="max-w-3xl w-full text-center fade-in">
+            <!-- Success Icon -->
+            <div class="flex items-center justify-center mb-8">
+                <div class="relative">
+                    <div class="size-24 bg-green-500/10 rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-green-400 text-6xl"
+                            style="animation: checkmark 0.6s ease-out;">check_circle</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <h1 class="text-3xl md:text-4xl font-black text-white mb-4">
+                Teşekkürler! Siparişiniz Başarıyla Alındı.
+            </h1>
+            <p class="text-white/80 text-lg mb-8 max-w-xl mx-auto">
+                Siparişinizin detaylarını aşağıda görebilirsiniz. Eğitimlerinize hemen başlayabilirsiniz.
+                Ayrıca, sipariş detaylarını içeren bir e-postayı tarafınıza gönderdik.
+            </p>
+
+            <!-- Order Details -->
+            <div class="card p-6 md:p-8 mb-8 text-left">
+                <div
+                    class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-[#222f49] mb-6">
+                    <div>
+                        <p class="text-white text-lg font-bold mb-1">Sipariş Özeti</p>
+                        <p class="text-white/60 text-sm">
+                            Sipariş Numaranız: <span class="text-white/90 font-medium order-number">-</span>
+                        </p>
+                        <p class="text-white/60 text-sm">
+                            Tarih: <span class="text-white/90 font-medium order-date">-</span>
+                        </p>
+                    </div>
+                    <div class="text-left md:text-right">
+                        <p class="text-white/60 text-sm">Toplam Ödenen Tutar</p>
+                        <p class="text-primary text-3xl font-bold order-total">₺0</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 order-items">
+                    <!-- Order items will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="egitimler.html" class="btn btn-primary px-8 py-4 text-base w-full sm:w-auto">
+                    <span class="flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined">play_circle</span>
+                        Eğitimlerime Git
+                    </span>
+                </a>
+                <a href="index.html" class="btn btn-secondary px-8 py-4 text-base w-full sm:w-auto">
+                    Ana Sayfaya Dön
+                </a>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="mt-12 p-6 bg-primary/10 rounded-lg border border-primary/30">
+                <div class="flex items-start gap-4 text-left">
+                    <span class="material-symbols-outlined text-primary text-3xl flex-shrink-0">info</span>
+                    <div>
+                        <h3 class="text-white font-bold mb-2">Bir Sonraki Adım</h3>
+                        <p class="text-white/80 text-sm">
+                            Eğitim paketlerinize erişmek için hesabınıza giriş yapın.
+                            Kişisel antrenörünüz 24 saat içinde sizinle iletişime geçecek ve
+                            programınızı başlatacaktır.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#222f49] mt-20 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <span class="text-white/80 text-sm">© 2024 FitnessMarka. Tüm hakları saklıdır.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/storage-manager.js"></script>
+    <script src="js/debug.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get order data from localStorage
+            const orderData = JSON.parse(localStorage.getItem('lastOrder') || '{}');
+
+            if (!orderData.orderNumber) {
+                // No order found, redirect to home
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Display order information
+            document.querySelector('.order-number').textContent = orderData.orderNumber;
+            document.querySelector('.order-total').textContent = `₺${orderData.total}`;
+
+            // Format date
+            const date = new Date(orderData.orderDate);
+            document.querySelector('.order-date').textContent = date.toLocaleDateString('tr-TR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            // Display order items
+            const itemsContainer = document.querySelector('.order-items');
+            if (orderData.items && orderData.items.length > 0) {
+                itemsContainer.innerHTML = orderData.items.map(item => `
+                    <div class="flex items-center gap-4 py-3 border-b border-[#222f49] last:border-0">
+                        <div class="w-16 h-16 bg-center bg-cover rounded-lg flex-shrink-0" 
+                             style="background-image: url('${item.image}')"></div>
+                        <div class="flex-1">
+                            <p class="text-white font-medium">${item.name}</p>
+                            <p class="text-white/60 text-sm">${item.period} Abonelik - Miktar: ${item.quantity}</p>
+                        </div>
+                        <p class="text-white font-semibold">₺${item.price * item.quantity}</p>
+                    </div>
+                `).join('');
+            }
+
+            // Create confetti effect
+            createConfetti();
+        });
+
+        function createConfetti() {
+            const colors = ['#0d59f2', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 50);
+            }
+        }
+    </script>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+        style="display: none;">
+        <div class="auth-modal-content bg-[#182234] border border-[#222f49] rounded-xl max-w-md w-full p-8 relative">
+            <button onclick="closeAuthModal()"
+                class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="active">
+                <h2 class="text-white text-2xl font-bold mb-2">Giriş Yap</h2>
+                <p class="text-white/60 text-sm mb-6">Hesabınıza giriş yapın</p>
+                <form onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="form-label">E-posta</label>
+                        <input type="email" id="loginEmail" class="form-input" placeholder="ornek@example.com" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre</label>
+                        <input type="password" id="loginPassword" class="form-input" placeholder="••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full py-3">Giriş Yap</button>
+                </form>
+                <p class="text-center text-white/60 text-sm mt-4">
+                    Hesabınız yok mu?
+                    <button onclick="switchToRegister()" class="text-primary hover:underline font-medium">Kayıt
+                        Ol</button>
+                </p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" style="display: none;">
+                <h2 class="text-white text-2xl font-bold mb-2">Kayıt Ol</h2>
+                <p class="text-white/60 text-sm mb-6">Yeni hesap oluşturun</p>
+                <form onsubmit="handleRegister(event)" class="space-y-4">
+                    <div>
+                        <label class="form-label">Ad Soyad</label>
+                        <input type="text" id="registerName" class="form-input" placeholder="Adınız Soyadınız" required>
+                    </div>
+                    <div>
+                        <label class="form-label">E-posta</label>
+                        <input type="email" id="registerEmail" class="form-input" placeholder="ornek@example.com"
+                            required>
+                    </div>
+                    <div>
+                        <label class="form-label">Telefon</label>
+                        <input type="tel" id="registerPhone" class="form-input" placeholder="5551234567" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre</label>
+                        <input type="password" id="registerPassword" class="form-input" placeholder="••••••"
+                            minlength="6" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre Tekrar</label>
+                        <input type="password" id="registerConfirmPassword" class="form-input" placeholder="••••••"
+                            minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full py-3">Kayıt Ol</button>
+                </form>
+                <p class="text-center text-white/60 text-sm mt-4">
+                    Zaten hesabınız var mı?
+                    <button onclick="switchToLogin()" class="text-primary hover:underline font-medium">Giriş
+                        Yap</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #authModal {
+            display: none;
+        }
+
+        #authModal.active {
+            display: flex !important;
+        }
+
+        #loginForm,
+        #registerForm {
+            display: none;
+        }
+
+        #loginForm.active,
+        #registerForm.active {
+            display: block !important;
+        }
+    </style>
+</body>
+
+</html>

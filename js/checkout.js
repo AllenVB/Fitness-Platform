@@ -187,6 +187,9 @@ function validatePaymentForm(data) {
 function processPayment(data) {
     showLoading();
     
+    // Ödeme işlemi başladı bildirimi
+    showToast('Ödeme işleminiz başlatılıyor...', 'success');
+    
     // Ödeme işlemi simülasyonu (2 saniye)
     setTimeout(() => {
         hideLoading();
@@ -206,11 +209,21 @@ function processPayment(data) {
         
         localStorage.setItem('lastOrder', JSON.stringify(orderData));
         
+        // Tüm siparişleri kaydet
+        const allOrders = JSON.parse(localStorage.getItem('allOrders') || '[]');
+        allOrders.push(orderData);
+        localStorage.setItem('allOrders', JSON.stringify(allOrders));
+        
+        // Başarı bildirimi
+        showToast('✅ Ödemeniz başarıyla onaylandı! Yönlendiriliyorsunuz...', 'success');
+        
         // Sepeti temizle
         cart.clear();
         
-        // Başarı sayfasına yönlendir
-        window.location.href = 'siparis-onay.html';
+        // 1 saniye sonra başarı sayfasına yönlendir
+        setTimeout(() => {
+            window.location.href = 'siparis-onay.html';
+        }, 1500);
     }, 2000);
 }
 

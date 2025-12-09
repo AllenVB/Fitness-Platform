@@ -16,11 +16,17 @@ function initCartPage() {
     const checkoutBtn = document.querySelector('.checkout-btn');
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', () => {
-            if (cart.items.length === 0) {
-                showToast('Sepetiniz boş!', 'error');
-                return;
+            // Auth kontrolü ile ödeme
+            if (typeof handleCheckoutWithAuth !== 'undefined') {
+                handleCheckoutWithAuth();
+            } else {
+                // Auth sistemi yüklü değilse eski yöntem
+                if (cart.items.length === 0) {
+                    showToast('Sepetiniz boş!', 'error');
+                    return;
+                }
+                window.location.href = 'odeme.html';
             }
-            window.location.href = 'odeme.html';
         });
     }
 }
@@ -33,10 +39,10 @@ function renderCartItems() {
     if (cart.items.length === 0) {
         cartContainer.innerHTML = `
             <div class="text-center py-20">
-                <span class="material-symbols-outlined text-6xl text-white/20 mb-4">shopping_cart</span>
+                <span class="material-symbols-outlined text-6xl text-white/20 mb-4 block">shopping_cart</span>
                 <h2 class="text-white text-2xl font-bold mb-2">Sepetiniz Boş</h2>
                 <p class="text-[#90a4cb] mb-6">Eğitim paketlerimize göz atın ve hedeflerinize ulaşın!</p>
-                <a href="egitimler.html" class="btn btn-primary px-6 py-3">Paketleri İncele</a>
+                <a href="egitimler.html" class="inline-block btn btn-primary px-6 py-3">Paketleri İncele</a>
             </div>
         `;
         return;
@@ -114,13 +120,22 @@ function handleRemoveItem(e) {
 function updateCartSummary() {
     const subtotal = cart.getTotal();
     const discount = 0;
-    const total = subtotal - discount;
+    const kdv = Math.round(subtotal * 0.20); // %20 KDV
+    const total = subtotal - discount + kdv;
     
+    // Ara toplam
     const subtotalEl = document.querySelector('.cart-subtotal');
-    const discountEl = document.querySelector('.cart-discount');
-    const totalEl = document.querySelector('.cart-total');
-    
     if (subtotalEl) subtotalEl.textContent = `₺${subtotal}`;
+    
+    // İndirim
+    const discountEl = document.querySelector('.cart-discount');
     if (discountEl) discountEl.textContent = `-₺${discount}`;
+    
+    // KDV
+    const kdvEl = document.querySelector('.cart-kdv');
+    if (kdvEl) kdvEl.textContent = `₺${kdv}`;
+    
+    // Toplam
+    const totalEl = document.querySelector('.cart-total');
     if (totalEl) totalEl.textContent = `₺${total}`;
 }

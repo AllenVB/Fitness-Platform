@@ -1,0 +1,86 @@
+<!-- Auth Modal - Tüm sayfalar için -->
+<div id="authModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+    style="display: none;">
+    <div class="auth-modal-content bg-[#182234] border border-[#222f49] rounded-xl max-w-md w-full p-8 relative">
+        <button onclick="closeAuthModal()"
+            class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="active">
+            <h2 class="text-white text-2xl font-bold mb-2">Giriş Yap</h2>
+            <p class="text-white/60 text-sm mb-6">Hesabınıza giriş yapın</p>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="form-label">E-posta</label>
+                    <input type="email" id="loginEmail" class="form-input" placeholder="ornek@example.com" required>
+                </div>
+                <div>
+                    <label class="form-label">Şifre</label>
+                    <input type="password" id="loginPassword" class="form-input" placeholder="••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-full py-3">Giriş Yap</button>
+            </form>
+            <p class="text-center text-white/60 text-sm mt-4">
+                Hesabınız yok mu?
+                <button onclick="switchToRegister()" class="text-primary hover:underline font-medium">Kayıt Ol</button>
+            </p>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerForm" style="display: none;">
+            <h2 class="text-white text-2xl font-bold mb-2">Kayıt Ol</h2>
+            <p class="text-white/60 text-sm mb-6">Yeni hesap oluşturun</p>
+            <form onsubmit="handleRegister(event)" class="space-y-4">
+                <div>
+                    <label class="form-label">Ad Soyad</label>
+                    <input type="text" id="registerName" class="form-input" placeholder="Adınız Soyadınız" required>
+                </div>
+                <div>
+                    <label class="form-label">E-posta</label>
+                    <input type="email" id="registerEmail" class="form-input" placeholder="ornek@example.com" required>
+                </div>
+                <div>
+                    <label class="form-label">Telefon</label>
+                    <input type="tel" id="registerPhone" class="form-input" placeholder="5551234567" required>
+                </div>
+                <div>
+                    <label class="form-label">Şifre</label>
+                    <input type="password" id="registerPassword" class="form-input" placeholder="••••••" minlength="6"
+                        required>
+                </div>
+                <div>
+                    <label class="form-label">Şifre Tekrar</label>
+                    <input type="password" id="registerConfirmPassword" class="form-input" placeholder="••••••"
+                        minlength="6" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-full py-3">Kayıt Ol</button>
+            </form>
+            <p class="text-center text-white/60 text-sm mt-4">
+                Zaten hesabınız var mı?
+                <button onclick="switchToLogin()" class="text-primary hover:underline font-medium">Giriş Yap</button>
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    #authModal {
+        display: none;
+    }
+
+    #authModal.active {
+        display: flex !important;
+    }
+
+    #loginForm,
+    #registerForm {
+        display: none;
+    }
+
+    #loginForm.active,
+    #registerForm.active {
+        display: block !important;
+    }
+</style>
