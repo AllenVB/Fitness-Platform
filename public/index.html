@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html class="dark" lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Fitness Platform - Anasayfa</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <script async src="https://unpkg.com/es-module-shims@1.10.0"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.165.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-background-dark font-display">
+
+    <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full z-[-1]"></canvas>
+
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-sm border-b border-[#222f49]">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-10 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-4 text-white">
+                    <h2 class="text-lg font-bold">AllenFit</h2>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-9">
+                    <a href="index.html" class="text-primary text-sm font-medium">Ana Sayfa</a>
+                    <a href="egitimler.html"
+                        class="text-white/80 hover:text-white text-sm font-medium transition-colors">Eğitimler</a>
+                    <a href="hakkimizda.html"
+                        class="text-white/80 hover:text-white text-sm font-medium transition-colors">Hakkımızda</a>
+                    <a href="iletisim.html"
+                        class="text-white/80 hover:text-white text-sm font-medium transition-colors">İletişim</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <a href="sepet.html" class="relative p-2 hover:bg-[#222f49] rounded-full transition-colors">
+                        <span class="material-symbols-outlined text-white">shopping_cart</span>
+                        <span class="cart-badge" style="display: none;">0</span>
+                    </a>
+
+                    <!-- Auth Buttons (Not Logged In) -->
+                    <div class="auth-buttons hidden sm:flex items-center gap-2">
+                        <button onclick="openAuthModal('login')"
+                            class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-[#222f49] text-white text-sm font-bold hover:bg-[#314368] transition-colors">
+                            Giriş Yap
+                        </button>
+                        <button onclick="openAuthModal('register')"
+                            class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/80 transition-colors">
+                            Kayıt Ol
+                        </button>
+                    </div>
+
+                    <!-- User Profile (Logged In) -->
+                    <div class="user-profile hidden items-center gap-3" style="display: none;">
+                        <span class="hidden sm:block text-white text-sm">Merhaba, <span
+                                class="user-name font-bold">Kullanıcı</span></span>
+                        <div class="relative group">
+                            <button
+                                class="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white font-bold">
+                                <span class="user-initial text-lg">K</span>
+                            </button>
+                            <div
+                                class="absolute right-0 top-12 bg-[#182234] border border-[#222f49] rounded-lg shadow-xl py-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                                <a href="profilim.html"
+                                    class="block px-4 py-2 text-white text-sm hover:bg-[#222f49] transition-colors">Profilim</a>
+                                <a href="siparişlerim.html"
+                                    class="block px-4 py-2 text-white text-sm hover:bg-[#222f49] transition-colors">Siparişlerim</a>
+                                <button onclick="auth.logout()"
+                                    class="block w-full text-left px-4 py-2 text-red-400 text-sm hover:bg-[#222f49] transition-colors">Çıkış
+                                    Yap</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button class="md:hidden mobile-menu-toggle text-white">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu">
+        <button class="mobile-menu-close">&times;</button>
+        <nav>
+            <a href="index.html">Ana Sayfa</a>
+            <a href="egitimler.html">Eğitimler</a>
+            <a href="hakkimizda.html">Hakkımızda</a>
+            <a href="iletisim.html">İletişim</a>
+            <a href="sepet.html">Sepetim</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="relative min-h-[480px] flex items-center justify-center text-center p-8">
+            <div class="relative z-10 max-w-3xl">
+                <h1 class="text-4xl md:text-5xl font-black text-white mb-4">AllenFit ile Değişime Hazır Ol!</h1>
+                <p class="text-white/80 text-lg mb-8">Kişiselleştirilmiş antrenman planları ve uzman eğitmenlerle potansiyelinizi ortaya çıkarın.</p>
+                <a href="egitimler.html" class="btn btn-primary px-8 py-4 text-lg">Eğitime Başla</a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="container mx-auto px-4 py-10 md:py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Neden Biz?</h2>
+                <p class="text-white/80 text-lg max-w-2xl mx-auto">Platformumuzun sizi hedeflerinize ulaştıracak temel özellikleri.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card card-hover p-6 text-center">
+                    <div class="flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-primary text-5xl">workspace_premium</span>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-2">Kişiselleştirilmiş Planlar</h3>
+                    <p class="text-[#90a4cb]">Size özel hazırlanan programlarla en iyi sonuçları alın.</p>
+                </div>
+
+                <div class="card card-hover p-6 text-center">
+                    <div class="flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-primary text-5xl">supervisor_account</span>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-2">Uzman Eğitmenler</h3>
+                    <p class="text-[#90a4cb]">Alanında uzman hocalarla doğru teknikleri öğrenin.</p>
+                </div>
+
+                <div class="card card-hover p-6 text-center">
+                    <div class="flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-primary text-5xl">groups</span>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-2">Topluluk Desteği</h3>
+                    <p class="text-[#90a4cb]">Binlerce üye ile motive kalın ve deneyimlerinizi paylaşın.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Packages Preview -->
+        <section class="container mx-auto px-4 py-10 md:py-16">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-8">Eğitim Paketleri</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="packagesPreview">
+                <!-- Packages will be inserted here by JavaScript -->
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="egitimler.html" class="btn btn-primary px-8 py-4 text-lg">Tüm Paketleri İncele</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#222f49] mt-20 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="size-5 text-primary">
+                        <svg fill="currentColor" viewBox="0 0 48 48">
+                            <path
+                                d="M25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span class="text-white/80 text-sm">© 2026 Süleyman Emre ARLI. Tüm hakları saklıdır.</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="#" class="text-white/80 hover:text-primary text-sm transition-colors">Gizlilik
+                        Politikası</a>
+                    <a href="#" class="text-white/80 hover:text-primary text-sm transition-colors">Hizmet Şartları</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/storage-manager.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/debug.js"></script>
+    <script src="/js/app.js"></script>
+    <script type="module" src="/js/3d-background.js"></script>
+    <script>
+        // Load packages preview
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('packagesPreview');
+            if (container && window.fitnessApp) {
+                const previewPackages = window.fitnessApp.packages.slice(0, 3);
+                container.innerHTML = previewPackages.map(pkg => `
+                    <div class="card card-hover group cursor-pointer" onclick="window.location.href='egitimler.html'">
+                        <div class="aspect-[3/4] bg-cover bg-center rounded-t-xl overflow-hidden">
+                            <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-300" 
+                                 style="background-image: url('${pkg.image}')"></div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-white font-bold text-lg mb-1">${pkg.name}</h3>
+                            <p class="text-[#90a4cb] text-sm mb-2">${pkg.features[0]}</p>
+                            <p class="text-white font-semibold text-xl">₺${pkg.price} / ay</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        });
+    </script>
+    
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+        style="display: none;">
+        <div class="auth-modal-content bg-[#182234] border border-[#222f49] rounded-xl max-w-md w-full p-8 relative">
+            <button onclick="closeAuthModal()"
+                class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="active">
+                <h2 class="text-white text-2xl font-bold mb-2">Giriş Yap</h2>
+                <p class="text-white/60 text-sm mb-6">Hesabınıza giriş yapın</p>
+                <form onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="form-label">E-posta</label>
+                        <input type="email" id="loginEmail" class="form-input" placeholder="ornek@example.com" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre</label>
+                        <input type="password" id="loginPassword" class="form-input" placeholder="••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full py-3">Giriş Yap</button>
+                </form>
+                <p class="text-center text-white/60 text-sm mt-4">
+                    Hesabınız yok mu?
+                    <button onclick="switchToRegister()" class="text-primary hover:underline font-medium">Kayıt
+                        Ol</button>
+                </p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" style="display: none;">
+                <h2 class="text-white text-2xl font-bold mb-2">Kayıt Ol</h2>
+                <p class="text-white/60 text-sm mb-6">Yeni hesap oluşturun</p>
+                <form onsubmit="handleRegister(event)" class="space-y-4">
+                    <div>
+                        <label class="form-label">Ad Soyad</label>
+                        <input type="text" id="registerName" class="form-input" placeholder="Adınız Soyadınız" required>
+                    </div>
+                    <div>
+                        <label class="form-label">E-posta</label>
+                        <input type="email" id="registerEmail" class="form-input" placeholder="ornek@example.com"
+                            required>
+                    </div>
+                    <div>
+                        <label class="form-label">Telefon</label>
+                        <input type="tel" id="registerPhone" class="form-input" placeholder="5551234567" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre</label>
+                        <input type="password" id="registerPassword" class="form-input" placeholder="••••••"
+                            minlength="6" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre Tekrar</label>
+                        <input type="password" id="registerConfirmPassword" class="form-input" placeholder="••••••"
+                            minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full py-3">Kayıt Ol</button>
+                </form>
+                <p class="text-center text-white/60 text-sm mt-4">
+                    Zaten hesabınız var mı?
+                    <button onclick="switchToLogin()" class="text-primary hover:underline font-medium">Giriş
+                        Yap</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #authModal {
+            display: none;
+        }
+
+        #authModal.active {
+            display: flex !important;
+        }
+
+        #loginForm,
+        #registerForm {
+            display: none;
+        }
+
+        #loginForm.active,
+        #registerForm.active {
+            display: block !important;
+        }
+    </style>
+</body>
+
+</html>

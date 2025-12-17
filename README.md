@@ -1,348 +1,99 @@
-# 💪 Fitness Platform - Authentication System
+# AllenFit - Full-Stack Fitness Platformu Mimarisi
 
-> Modern, responsive auth sistemi localStorage tabanlı oturum yönetimi ile
+[![Durum](https://img.shields.io/badge/Status-Geli%C5%9Ftirme_A%C5%9Famas%C4%B1nda-orange)](https://github.com/suleymanemre/fitness-platform)
+[![Versiyon](https://img.shields.io/badge/Versiyon-1.5.0-blue)](https://github.com/suleymanemre/fitness-platform)
+[![Lisans](https://img.shields.io/badge/Lisans-MIT-green)](./LICENSE)
 
-![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
-![Version](https://img.shields.io/badge/Version-1.0.0-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
-
----
-
-## 🚀 Hızlı Başlangıç
-
-### Kurulum
-```bash
-# Dosyaları klonla/indir
-git clone <repository>
-cd fitness-platform
-
-# Tarayıcıda aç
-index.html
-```
-
-### İlk Giriş
-```
-Email:    demo@example.com
-Şifre:    demo123
-```
-
-### Console'dan Test
-```javascript
-// Yardımı göster
-help()
-
-// Tüm veriyi göster
-showStorage()
-
-// Demo giriş
-testLogin()
-```
+Bu doküman, AllenFit projesinin teknik mimarisini, dosya yapısını ve temel işlevlerini açıklamaktadır. Proje, kullanıcıların fitness hedeflerine ulaşmalarını sağlayan modern bir full-stack web uygulamasıdır.
 
 ---
 
-## 📋 Sistem Özellikleri
+## 🏗️ Proje Mimarisi ve Yapısı
 
-### Auth Komponenti ✨
-- [x] **Login Modal** - Şık giriş formları
-- [x] **Register Modal** - Yeni kullanıcı kaydı
-- [x] **Form Validasyonu** - Client-side doğrulama
-- [x] **LocalStorage** - Veri kalıcılığı
-- [x] **Session Management** - Oturum yönetimi
-- [x] **User Profile** - Profil göstergesi
-
-### UI/UX 🎨
-- [x] **Responsive Design** - Mobil uyumlu
-- [x] **Smooth Animations** - CSS animasyonlar
-- [x] **Dark Theme** - Modern görünüş
-- [x] **Toast Notifications** - Bildirim sistemi
-- [x] **Form Feedback** - Anlık geri bildirim
-- [x] **Loading States** - Yükleme göstergesi
-
-### Developer Tools 🛠️
-- [x] **Console Commands** - Debug komutları
-- [x] **Debug Page** - Visual arayüz
-- [x] **Storage Monitor** - Veri takibi
-- [x] **Test Utilities** - Test araçları
-- [x] **Documentation** - Detaylı rehber
-
----
-
-## 📁 Proje Yapısı
+Proje, geleneksel bir **Monolith** mimariye sahiptir. Arka uç (Node.js) ve ön uç (statik HTML/CSS/JS dosyaları) aynı proje altında birleştirilmiştir.
 
 ```
 fitness-platform/
 │
-├── index.html                      # Ana sayfa
-├── egitimler.html                  # Eğitimler sayfası
-├── hakkimizda.html                 # Hakkımızda sayfası
-├── iletisim.html                   # İletişim sayfası
-├── sepet.html                      # Alışveriş sepeti
-├── odeme.html                      # Ödeme sayfası
-├── siparis-onay.html               # Sipariş onayı
+├── server.js               # 📍 Ana sunucu dosyası (Express, API rotaları, DB bağlantısı)
 │
-├── js/
-│   ├── app.js                      # Ana uygulama
-│   ├── auth.js                     # Auth sistemi 📍
-│   ├── debug.js                    # Debug utilities
-│   ├── storage-manager.js          # Storage yönetimi
-│   ├── cart.js                     # Sepet sistemi
-│   └── checkout.js                 # Ödeme sistemi
+├── package.json            # Proje bağımlılıkları (Express, pg, cors)
 │
-├── css/
-│   └── style.css                   # Stil ve animasyonlar
-│
-├── data/
-│   └── packages.json               # Paket verileri
-│
-├── storage-debug.html              # Debug sayfası 🔍
-│
-├── 📚 Dokümantasyon
-│   ├── README.md                   # Bu dosya
-│   ├── QUICK_START.md              # 30 saniye rehberi
-│   ├── AUTH_SETUP.md               # Kurulum detayları
-│   ├── DATABASE_INTEGRATION.md     # DB entegrasyon
-│   ├── FINAL_SUMMARY.md            # Tamamlama özeti
-│   └── CHECKLIST.md                # Kontrol listesi
-│
-└── .git/                           # Version kontrol
+└── public/                 # Ön uç dosyalarının barındığı ana klasör
+    │
+    ├── index.html          # Ana sayfa (3D metin efekti burada yer alır)
+    ├── egitimler.html      # Dinamik olarak oluşturulan eğitim paketleri sayfası
+    ├── hakkimizda.html     # "Biz Kimiz?" ve "Vizyonumuz" kartlarını içeren sayfa
+    ├── iletisim.html       # Sunucuya bağlanan iletişim formu
+    ├── profilim.html       # Kullanıcı profili görüntüleme ve güncelleme sayfası
+    │
+    ├── css/
+    │   └── style.css       # 🎨 Global stiller, animasyonlar ve `.card` bileşeni
+    │
+    └── js/
+        ├── app.js          # Ana istemci tarafı script (Paket verileri, sepet mantığı, Toast bildirimleri)
+        ├── auth.js         # Kullanıcı kayıt ve giriş API çağrıları
+        └── cart.js         # Sepet yönetimi fonksiyonları
 ```
 
 ---
 
-## 🔑 Temel Komutlar
+## ✨ Uygulama Katmanları ve Özellikleri
 
-### Console Commands
-```javascript
-// Auth
-help()                          // Yardım menüsü
-testLogin()                     // Demo giriş
-testLogout()                    // Çıkış
+###  Backend (Sunucu Tarafı - `server.js`)
 
-// Storage
-showStorage()                   // Tüm veriyi göster
-storage.listAllItems()         // Storage detayları
-storage.getStoragePercentage() // Kullanım yüzdesi
+- **Web Sunucusu:** `Express.js` kullanılarak oluşturulmuş, statik dosyaları (`public` klasörü) sunan ve API isteklerini karşılayan bir sunucu.
+- **Veritabanı Yönetimi:** `pg` (node-postgres) kütüphanesi ile PostgreSQL veritabanına bağlanır. Sunucu başlangıcında, `uyeler` ve `iletisim_mesajlari` tablolarının varlığını kontrol eder ve yoksa oluşturur.
+- **REST API:**
+  - `POST /api/register`: Yeni kullanıcıyı veritabanına ekler.
+  - `POST /api/login`: Kullanıcı kimlik bilgilerini veritabanında doğrular.
+  - `PUT /api/user/:id`: Kullanıcı profilini veritabanında günceller.
+  - `POST /api/contact`: Gelen iletişim mesajlarını veritabanına yazar.
 
-// Utilities
-addTestUser()                   // Test user ekle
-clearAllData()                  // Tüm veriyi sil
-```
+### Frontend (İstemci Tarafı - `public/` klasörü)
 
-### HTML Elements
-```javascript
-// Modal kontrol
-openAuthModal('login')         // Login modal'ını aç
-openAuthModal('register')      // Register modal'ını aç
-closeAuthModal()               // Modal'ı kapat
-switchToLogin()                // Login formuna geç
-switchToRegister()             // Register formuna geç
-```
+- **Kullanıcı Arayüzü (UI):**
+  - **Dinamik Kartlar:** `egitimler.html` sayfasındaki eğitim paketleri, `app.js` içerisindeki `packages` dizisinden dinamik olarak oluşturulur. Her kartta "Detayları İncele" ve "Sepete Ekle" işlevleri bulunur.
+  - **Modern Stil:** Proje genelinde `Tailwind CSS` ve özel CSS (`style.css`) kullanılmıştır. `.card` sınıfı, sayfalardaki temel kutu bileşenidir.
+  - **Geri Bildirim:** Kullanıcı aksiyonları (sepete ekleme, form gönderme vb.) için sağ altta çıkan `Toast` bildirimleri kullanılır (`app.js` içinde `showToast` fonksiyonu).
+- **İstemci Mantığı (JavaScript):**
+  - **`app.js`:** Sepet (`Cart` sınıfı), paket verileri (`packages` dizisi) ve global yardımcı fonksiyonları (`showToast` vb.) içerir.
+  - **`auth.js`:** Sunucudaki `/api/login` ve `/api/register` uç noktalarına `fetch` istekleri göndererek kullanıcı kimlik doğrulama işlemlerini yönetir.
+  - **`profilim.html` (inline script):** Kullanıcının profil bilgilerini `/api/user/:id` uç noktasına `PUT` isteği ile göndererek günceller.
+  - **`iletisim.html` (inline script):** İletişim formunu, başarılı gönderim sonrası formu gizleyip yerine bir başarı mesajı gösterecek şekilde yönetir.
 
 ---
 
-## 📊 LocalStorage Yapısı
+## 🗄️ Veritabanı Şeması
 
-### `users` - Kayıtlı Kullanıcılar
-```javascript
-[
-  {
-    id: 1234567890,
-    name: "Kullanıcı Adı",
-    email: "user@example.com",
-    phone: "5551234567",
-    password: "hashedPassword",
-    createdAt: "2025-12-09T10:30:00Z"
-  }
-]
-```
+Sunucu tarafından otomatik olarak iki ana tablo oluşturulur:
 
-### `currentUser` - Oturum Açan Kullanıcı
-```javascript
-{
-  id: 1234567890,
-  name: "Kullanıcı Adı",
-  email: "user@example.com",
-  phone: "5551234567",
-  createdAt: "2025-12-09T10:30:00Z"
-}
-```
+1.  **`uyeler` Tablosu:**
+    - `id`: `SERIAL PRIMARY KEY` - Otomatik artan benzersiz kimlik.
+    - `name`: `VARCHAR(100)` - Kullanıcının adı.
+    - `email`: `VARCHAR(100) UNIQUE NOT NULL` - Benzersiz kullanıcı e-postası.
+    - `phone`: `VARCHAR(20)` - Telefon numarası.
+    - `password`: `VARCHAR(100)` - Kullanıcı şifresi (*Not: Hash'leme henüz eklenmemiştir*).
+    - `created_at`: `TIMESTAMP` - Kayıt oluşturulma zamanı.
+
+2.  **`iletisim_mesajlari` Tablosu:**
+    - `id`: `SERIAL PRIMARY KEY` - Otomatik artan benzersiz kimlik.
+    - `name`, `email`, `message`: Mesaj içeriği.
+    - `phone`: Gönderenin telefon numarası.
+    - `created_at`: `TIMESTAMP` - Mesajın oluşturulma zamanı.
 
 ---
 
-## 🧪 Test Süreci
+## 🛠️ Teknik Yapı
 
-### 1. Browser'da Açın
-```
-index.html
-```
-
-### 2. "Giriş Yap" Butonunu Tıklayın
-Modal açılacak
-
-### 3. Demo Bilgileri Girin
-```
-Email:    demo@example.com
-Şifre:    demo123
-```
-
-### 4. Başarı Mesajı Bekleme
-```
-✅ Giriş başarılı!
-```
-
-### 5. Header'da Profil İkonu Görün
-Kullanıcı adı gösterilecek
-
-### 6. Console'da Doğrulayın
-```javascript
-console.log(auth.currentUser) // Kullanıcı bilgileri
-showStorage()                 // LocalStorage veri
-```
+- **Backend:** Node.js, Express.js
+- **Veritabanı:** PostgreSQL (`pg` kütüphanesi ile)
+- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
+- **Styling:** Tailwind CSS
+- **API Mimarisi:** RESTful
 
 ---
 
-## 🔐 Güvenlik Bilgileri
+## 🚀 Hızlı Kurulum Notları
 
-⚠️ **Bu sistem DEMO/TEST amaçlı geliştirilmiştir!**
-
-### Mevcut Durumu
-- ❌ Şifreler hash'lenmemiş
-- ❌ HTTPS yok
-- ❌ Backend yok
-- ❌ CORS yok
-
-### Production için Gerekli
-- ✅ Bcrypt/Argon2 ile şifre hash'leme
-- ✅ HTTPS kullanımı
-- ✅ Backend API kurulumu
-- ✅ JWT token sistemi
-- ✅ Database entegrasyonu
-- ✅ CORS ayarlanması
-
-Detay için: [DATABASE_INTEGRATION.md](./DATABASE_INTEGRATION.md)
-
----
-
-## 📦 Teknoloji Stack
-
-### Frontend
-- **HTML5** - Semantic markup
-- **CSS3** - Animations & Responsive
-- **JavaScript (ES6+)** - Modern syntax
-- **Tailwind CSS** - Utility styling
-- **Material Icons** - Icon set
-
-### Storage
-- **LocalStorage** - Client-side data
-- **JSON** - Data format
-
-### Tools
-- **Git** - Version control
-- **Browser DevTools** - Debugging
-
----
-
-## 🎓 Öğrenme Kaynakları
-
-### Auth System Kodları
-- `js/auth.js` - Auth mantığı
-- `js/debug.js` - Test utilities
-- `js/storage-manager.js` - Storage yönetimi
-
-### Form Handling
-- `index.html` - Modal HTML
-- `css/style.css` - Styling
-
-### Dokumentasyon
-- `QUICK_START.md` - 30 saniye rehberi
-- `AUTH_SETUP.md` - Detaylı kurulum
-- `DATABASE_INTEGRATION.md` - DB bağlantısı
-
----
-
-## 🚀 Sonraki Adımlar
-
-1. **Database Kurulumu**
-   - MongoDB / PostgreSQL seçin
-   - Backend API oluşturun
-   - `DATABASE_INTEGRATION.md` referansı
-
-2. **API Entegrasyonu**
-   - `/api/register` endpoint'i
-   - `/api/login` endpoint'i
-   - `/api/logout` endpoint'i
-
-3. **JWT Token Sistemi**
-   - Token oluşturma
-   - Token doğrulama
-   - Token yenileme
-
-4. **Güvenlik Auditi**
-   - OWASP checklist
-   - Penetrasyon testi
-   - Kod review
-
----
-
-## 📞 FAQ
-
-**S: Veriler nerede kaydediliyor?**  
-C: Browser'ın LocalStorage'ında. Tarayıcı cache'i silinirse silinir.
-
-**S: Şifrelerim güvenli mi?**  
-C: Hayır, bu demo amaçlı. Production'da bcrypt ile hash'leme gerekli.
-
-**S: Database bağlayabilir miyim?**  
-C: Evet! `DATABASE_INTEGRATION.md` rehberini takip edin.
-
-**S: Mobile'da çalışıyor mu?**  
-C: Evet, responsive tasarım mobil cihazları destekliyor.
-
-**S: Tüm veriyi nasıl silebilirim?**  
-C: Console'da `clearAllData()` komutunu çalıştırın.
-
----
-
-## 📄 Lisans
-
-MIT License - Özgürce kullanabilirsiniz
-
----
-
-## 👨‍💻 Geliştirme
-
-### Yeni Özellik Ekleme
-1. Dosyayı düzenle
-2. Localhost'ta test et
-3. Console'da kontrol et
-4. Dokümantasyonu güncelle
-
-### Hata Bulma
-1. Console errors'ı kontrol et (`F12`)
-2. LocalStorage'ı kontrol et
-3. `showStorage()` komutunu çalıştır
-4. Debug sayfasını ziyaret et
-
----
-
-## 📞 Destek
-
-Sorular için:
-- 📖 `QUICK_START.md` - Hızlı rehber
-- 📚 `AUTH_SETUP.md` - Detaylı setup
-- 🔍 `storage-debug.html` - Visual debug
-- 💻 `js/debug.js` - Console tools
-
----
-
-## ✨ Teşekkürler
-
-Bu proje Fitness Platform'un auth sisteminin modern ve responsive bir implementasyonudur.
-
----
-
-**Version:** 1.0.0  
-**Son Güncelleme:** Aralık 2025  
-**Status:** ✅ Hazır & Test Edildi
-
-🚀 **Başlamak için:** `index.html`
+Projeyi çalıştırmak için `npm install` komutuyla bağımlılıkları yükledikten sonra `server.js` dosyasındaki `Pool` yapılandırmasını kendi PostgreSQL bilgilerinize göre düzenleyip `node server.js` komutunu çalıştırmanız yeterlidir.

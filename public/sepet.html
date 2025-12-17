@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="dark" lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Sepetim - Fitness Platform</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-background-dark font-display">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-sm border-b border-[#222f49]">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-10 py-3">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-4 text-white">
+                    <h2 class="text-lg font-bold">AllenFit</h2>
+                </a>
+
+                <nav class="hidden md:flex items-center gap-9">
+                    <a href="index.html"
+                        class="text-white/80 hover:text-white text-sm font-medium transition-colors">Ana Sayfa</a>
+                    <a href="egitimler.html"
+                        class="text-white/80 hover:text-white text-sm font-medium transition-colors">Eğitimler</a>
+                    <a href="hakkimizda.html"
+                        class="text-white/80 hover:text-white text-sm font-medium transition-colors">Hakkımızda</a>
+                    <a href="iletisim.html"
+                        class="text-white/80 hover:text-white text-sm font-medium transition-colors">İletişim</a>
+                </nav>
+
+                <div class="flex items-center gap-4">
+                    <a href="sepet.html" class="relative p-2 bg-[#222f49] rounded-full">
+                        <span class="material-symbols-outlined text-white">shopping_cart</span>
+                        <span class="cart-badge" style="display: none;">0</span>
+                    </a>
+                    <button class="md:hidden mobile-menu-toggle text-white">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu">
+        <button class="mobile-menu-close">&times;</button>
+        <nav>
+            <a href="index.html">Ana Sayfa</a>
+            <a href="egitimler.html">Eğitimler</a>
+            <a href="hakkimizda.html">Hakkımızda</a>
+            <a href="iletisim.html">İletişim</a>
+            <a href="sepet.html">Sepetim</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="pt-20 min-h-screen">
+        <div class="container mx-auto px-4 py-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-8">Sepetim</h1>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Cart Items -->
+                <div class="flex-1">
+                    <div class="cart-items-container space-y-6">
+                        <!-- Items will be inserted here by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="lg:w-80 flex-shrink-0">
+                    <div class="card p-6 sticky top-24 space-y-6">
+                        <h2 class="text-white text-xl font-bold">Sipariş Özeti</h2>
+
+                        <div class="space-y-3 pb-4 border-b border-[#222f49]">
+                            <div class="flex justify-between text-white/80">
+                                <span>Ara Toplam</span>
+                                <span class="cart-subtotal text-white">₺0</span>
+                            </div>
+                            <div class="flex justify-between text-white/80">
+                                <span>KDV (%20)</span>
+                                <span class="cart-kdv text-white">₺0</span>
+                            </div>
+                            <div class="flex justify-between text-white/80">
+                                <span>İndirim</span>
+                                <span class="cart-discount text-white">-₺0</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-white text-lg font-bold">Toplam</span>
+                            <span class="cart-total text-primary text-2xl font-bold">₺0</span>
+                        </div>
+
+                        <button class="checkout-btn btn btn-primary w-full py-4 text-base">
+                            Ödemeye Geç
+                        </button>
+
+                        <a href="egitimler.html"
+                            class="block text-center text-white/80 hover:text-white text-sm transition-colors">
+                            ← Alışverişe Devam Et
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#222f49] mt-20 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="size-5 text-primary">
+                        <svg fill="currentColor" viewBox="0 0 48 48">
+                            <path
+                                d="M25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span class="text-white/80 text-sm">© 2026 Süleyman Emre ARLI. Tüm hakları saklıdır.</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="#" class="text-white/80 hover:text-primary text-sm transition-colors">Gizlilik
+                        Politikası</a>
+                    <a href="#" class="text-white/80 hover:text-primary text-sm transition-colors">Hizmet Şartları</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/storage-manager.js"></script>
+    <script src="js/debug.js"></script>
+    <script src="js/cart.js"></script>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+        style="display: none;">
+        <div class="auth-modal-content bg-[#182234] border border-[#222f49] rounded-xl max-w-md w-full p-8 relative">
+            <button onclick="closeAuthModal()"
+                class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="active">
+                <h2 class="text-white text-2xl font-bold mb-2">Giriş Yap</h2>
+                <p class="text-white/60 text-sm mb-6">Hesabınıza giriş yapın</p>
+                <form onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="form-label">E-posta</label>
+                        <input type="email" id="loginEmail" class="form-input" placeholder="ornek@example.com" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre</label>
+                        <input type="password" id="loginPassword" class="form-input" placeholder="••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full py-3">Giriş Yap</button>
+                </form>
+                <p class="text-center text-white/60 text-sm mt-4">
+                    Hesabınız yok mu?
+                    <button onclick="switchToRegister()" class="text-primary hover:underline font-medium">Kayıt
+                        Ol</button>
+                </p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" style="display: none;">
+                <h2 class="text-white text-2xl font-bold mb-2">Kayıt Ol</h2>
+                <p class="text-white/60 text-sm mb-6">Yeni hesap oluşturun</p>
+                <form onsubmit="handleRegister(event)" class="space-y-4">
+                    <div>
+                        <label class="form-label">Ad Soyad</label>
+                        <input type="text" id="registerName" class="form-input" placeholder="Adınız Soyadınız" required>
+                    </div>
+                    <div>
+                        <label class="form-label">E-posta</label>
+                        <input type="email" id="registerEmail" class="form-input" placeholder="ornek@example.com"
+                            required>
+                    </div>
+                    <div>
+                        <label class="form-label">Telefon</label>
+                        <input type="tel" id="registerPhone" class="form-input" placeholder="5551234567" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre</label>
+                        <input type="password" id="registerPassword" class="form-input" placeholder="••••••"
+                            minlength="6" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre Tekrar</label>
+                        <input type="password" id="registerConfirmPassword" class="form-input" placeholder="••••••"
+                            minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full py-3">Kayıt Ol</button>
+                </form>
+                <p class="text-center text-white/60 text-sm mt-4">
+                    Zaten hesabınız var mı?
+                    <button onclick="switchToLogin()" class="text-primary hover:underline font-medium">Giriş
+                        Yap</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #authModal {
+            display: none;
+        }
+
+        #authModal.active {
+            display: flex !important;
+        }
+
+        #loginForm,
+        #registerForm {
+            display: none;
+        }
+
+        #loginForm.active,
+        #registerForm.active {
+            display: block !important;
+        }
+    </style>
+</body>
+
+</html>

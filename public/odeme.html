@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html class="dark" lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Ödeme - Fitness Platform</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-background-dark font-display">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-sm border-b border-[#222f49]">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-10 py-3">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-4 text-white">
+                    <h2 class="text-lg font-bold">AllenFit</h2>
+                </a>
+
+                <div class="flex items-center gap-4">
+                    <span class="text-white/60 text-sm hidden sm:block">Güvenli Ödeme</span>
+                    <span class="material-symbols-outlined text-green-500">lock</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20 min-h-screen">
+        <div class="container mx-auto px-4 py-10 max-w-5xl">
+            <div class="mb-8">
+                <a href="sepet.html"
+                    class="inline-flex items-center text-white/80 hover:text-white transition-colors mb-4">
+                    <span class="material-symbols-outlined mr-2">arrow_back</span>
+                    Sepete Dön
+                </a>
+                <h1 class="text-3xl md:text-4xl font-bold text-white">Ödeme Bilgileri</h1>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Payment Form -->
+                <div class="lg:col-span-2">
+                    <form id="paymentForm" class="space-y-6">
+                        <!-- Contact Information -->
+                        <div class="card p-6">
+                            <h2 class="text-white text-xl font-bold mb-4">İletişim Bilgileri</h2>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="form-label">E-posta Adresi *</label>
+                                    <input type="email" id="email" class="form-input" placeholder="ornek@email.com"
+                                        required>
+                                </div>
+
+                                <div>
+                                    <label class="form-label">Telefon Numarası *</label>
+                                    <input type="tel" id="phone" class="form-input" placeholder="0555 123 45 67"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Information -->
+                        <div class="card p-6">
+                            <h2 class="text-white text-xl font-bold mb-4">Kart Bilgileri</h2>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="form-label">Kart Üzerindeki İsim *</label>
+                                    <input type="text" id="cardName" class="form-input" placeholder="AD SOYAD" required>
+                                </div>
+
+                                <div>
+                                    <label class="form-label">Kart Numarası *</label>
+                                    <input type="text" id="cardNumber" class="form-input"
+                                        placeholder="1234 5678 9012 3456" maxlength="19" required>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="form-label">Son Kullanma Tarihi *</label>
+                                        <input type="text" id="expiry" class="form-input" placeholder="AA/YY"
+                                            maxlength="5" required>
+                                    </div>
+
+                                    <div>
+                                        <label class="form-label">CVV *</label>
+                                        <input type="text" id="cvv" class="form-input" placeholder="123" maxlength="3"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Terms -->
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" id="terms"
+                                class="mt-1 rounded border-[#222f49] bg-[#182234] text-primary focus:ring-primary"
+                                required>
+                            <label for="terms" class="text-white/80 text-sm">
+                                <a href="#" class="text-primary hover:underline">Kullanım Şartları</a> ve
+                                <a href="#" class="text-primary hover:underline">Gizlilik Politikası</a>'nı okudum,
+                                kabul ediyorum.
+                            </label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary w-full py-4 text-lg">
+                            <span class="flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">lock</span>
+                                Güvenli Ödeme Yap
+                            </span>
+                        </button>
+
+                        <p class="text-center text-white/60 text-sm">
+                            <span class="material-symbols-outlined text-base align-middle">info</span>
+                            Ödemeniz 256-bit SSL ile güvence altındadır
+                        </p>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="card p-6 sticky top-24 space-y-4">
+                        <h2 class="text-white text-xl font-bold">Sipariş Özeti</h2>
+
+                        <div class="checkout-items space-y-2 max-h-64 overflow-y-auto">
+                            <!-- Items will be inserted here -->
+                        </div>
+
+                        <div class="pt-4 border-t border-[#222f49] space-y-2">
+                            <div class="flex justify-between text-white/80">
+                                <span>Ara Toplam</span>
+                                <span class="checkout-total">₺0</span>
+                            </div>
+                            <div class="flex justify-between text-white/80">
+                                <span>KDV (%20)</span>
+                                <span class="checkout-tax">₺0</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-[#222f49]">
+                            <div class="flex justify-between items-center">
+                                <span class="text-white text-lg font-bold">Toplam</span>
+                                <span class="checkout-total text-primary text-2xl font-bold">₺0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#222f49] mt-20 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <span class="text-white/80 text-sm">© 2024 Fitness Platform. Tüm hakları saklıdır.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/checkout.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/storage-manager.js"></script>
+    <script src="js/debug.js"></script>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+        style="display: none;">
+        <div class="auth-modal-content bg-[#182234] border border-[#222f49] rounded-xl max-w-md w-full p-8 relative">
+            <button onclick="closeAuthModal()"
+                class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="active">
+                <h2 class="text-white text-2xl font-bold mb-2">Giriş Yap</h2>
+                <p class="text-white/60 text-sm mb-6">Hesabınıza giriş yapın</p>
+                <form onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="form-label">E-posta</label>
+                        <input type="email" id="loginEmail" class="form-input" placeholder="ornek@example.com" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre</label>
+                        <input type="password" id="loginPassword" class="form-input" placeholder="••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full py-3">Giriş Yap</button>
+                </form>
+                <p class="text-center text-white/60 text-sm mt-4">
+                    Hesabınız yok mu?
+                    <button onclick="switchToRegister()" class="text-primary hover:underline font-medium">Kayıt
+                        Ol</button>
+                </p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" style="display: none;">
+                <h2 class="text-white text-2xl font-bold mb-2">Kayıt Ol</h2>
+                <p class="text-white/60 text-sm mb-6">Yeni hesap oluşturun</p>
+                <form onsubmit="handleRegister(event)" class="space-y-4">
+                    <div>
+                        <label class="form-label">Ad Soyad</label>
+                        <input type="text" id="registerName" class="form-input" placeholder="Adınız Soyadınız" required>
+                    </div>
+                    <div>
+                        <label class="form-label">E-posta</label>
+                        <input type="email" id="registerEmail" class="form-input" placeholder="ornek@example.com"
+                            required>
+                    </div>
+                    <div>
+                        <label class="form-label">Telefon</label>
+                        <input type="tel" id="registerPhone" class="form-input" placeholder="5551234567" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre</label>
+                        <input type="password" id="registerPassword" class="form-input" placeholder="••••••"
+                            minlength="6" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Şifre Tekrar</label>
+                        <input type="password" id="registerConfirmPassword" class="form-input" placeholder="••••••"
+                            minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full py-3">Kayıt Ol</button>
+                </form>
+                <p class="text-center text-white/60 text-sm mt-4">
+                    Zaten hesabınız var mı?
+                    <button onclick="switchToLogin()" class="text-primary hover:underline font-medium">Giriş
+                        Yap</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #authModal {
+            display: none;
+        }
+
+        #authModal.active {
+            display: flex !important;
+        }
+
+        #loginForm,
+        #registerForm {
+            display: none;
+        }
+
+        #loginForm.active,
+        #registerForm.active {
+            display: block !important;
+        }
+    </style>
+</body>
+
+</html>
