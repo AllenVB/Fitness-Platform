@@ -153,6 +153,12 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+// --- SERVER STATUS CHECK ---
+app.head('/api/status', (req, res) => {
+    res.status(200).end();
+});
+
+
 // --- PROFİL GÜNCELLEME ROTASI ---
 app.put('/api/user/:id', async (req, res) => {
     const { id } = req.params;

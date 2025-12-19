@@ -293,5 +293,19 @@ window.fitnessApp = {
     showLoading,
     hideLoading,
     validateEmail,
-    validatePhone
+    validatePhone,
+    checkServerStatus
 };
+
+// ============================================
+// SERVER STATUS CHECK
+// ============================================
+async function checkServerStatus() {
+    try {
+        const response = await fetch('/api/status', { method: 'HEAD', cache: 'no-cache' });
+        return response.ok;
+    } catch (error) {
+        console.error("Server check failed:", error);
+        return false;
+    }
+}

@@ -110,121 +110,127 @@ function initPaymentForm() {
 function handlePaymentSubmit(e) {
     e.preventDefault();
     
+    const form = e.target;
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    // Remove previous errors
+    form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+
     const formData = {
         cardName: document.getElementById('cardName')?.value,
         cardNumber: document.getElementById('cardNumber')?.value.replace(/\s/g, ''),
         expiry: document.getElementById('expiry')?.value,
         cvv: document.getElementById('cvv')?.value,
         email: document.getElementById('email')?.value,
-        phone: document.getElementById('phone')?.value
+        phone: document.getElementById('phone')?.value,
+        terms: document.getElementById('terms')?.checked
     };
     
-    // Validasyon
     const errors = validatePaymentForm(formData);
     
     if (errors.length > 0) {
         errors.forEach(error => {
-            showToast(error, 'error');
+            showToast(error.message, 'error');
+            document.getElementById(error.field)?.classList.add('error');
         });
         return;
     }
     
-    // Ödeme işlemi simülasyonu
-    processPayment(formData);
+    // Add processing state to button
+    submitButton.classList.add('processing');
+    submitButton.disabled = true;
+
+    processPayment(formData, () => {
+        // Remove processing state on completion
+        submitButton.classList.remove('processing');
+        submitButton.disabled = false;
+    });
 }
 
 function validatePaymentForm(data) {
     const errors = [];
     
     if (!data.cardName || data.cardName.trim().length < 3) {
-        errors.push('Kart üzerindeki ismi eksiksiz girin');
-        document.getElementById('cardName')?.classList.add('error');
+        errors.push({ field: 'cardName', message: 'Kart üzerindeki ismi eksiksiz girin' });
     }
     
-    if (!data.cardNumber || data.cardNumber.length !== 16) {
-        errors.push('Geçerli bir kart numarası girin (16 hane)');
-        document.getElementById('cardNumber')?.classList.add('error');
+    if (!data.cardNumber || !/^\d{16}$/.test(data.cardNumber)) {
+        errors.push({ field: 'cardNumber', message: 'Geçerli bir kart numarası girin (16 hane)' });
     }
     
-    if (!data.expiry || data.expiry.length !== 5) {
-        errors.push('Geçerli bir son kullanma tarihi girin (AA/YY)');
-        document.getElementById('expiry')?.classList.add('error');
+    if (!data.expiry || !/^\d{2}\/\d{2}$/.test(data.expiry)) {
+        errors.push({ field: 'expiry', message: 'Geçerli bir son kullanma tarihi girin (AA/YY)' });
     } else {
-        // Tarihi kontrol et
         const [month, year] = data.expiry.split('/');
         const now = new Date();
         const currentYear = now.getFullYear() % 100;
         const currentMonth = now.getMonth() + 1;
         
         if (parseInt(month) < 1 || parseInt(month) > 12) {
-            errors.push('Geçersiz ay');
-            document.getElementById('expiry')?.classList.add('error');
+            errors.push({ field: 'expiry', message: 'Geçersiz ay' });
         } else if (parseInt(year) < currentYear || 
                    (parseInt(year) === currentYear && parseInt(month) < currentMonth)) {
-            errors.push('Kartınızın süresi dolmuş');
-            document.getElementById('expiry')?.classList.add('error');
+            errors.push({ field: 'expiry', message: 'Kartınızın süresi dolmuş' });
         }
     }
     
-    if (!data.cvv || data.cvv.length !== 3) {
-        errors.push('Geçerli bir CVV girin (3 hane)');
-        document.getElementById('cvv')?.classList.add('error');
+    if (!data.cvv || !/^\d{3}$/.test(data.cvv)) {
+        errors.push({ field: 'cvv', message: 'Geçerli bir CVV girin (3 hane)' });
     }
     
     if (!data.email || !validateEmail(data.email)) {
-        errors.push('Geçerli bir e-posta adresi girin');
-        document.getElementById('email')?.classList.add('error');
+        errors.push({ field: 'email', message: 'Geçerli bir e-posta adresi girin' });
     }
     
     if (!data.phone || !validatePhone(data.phone)) {
-        errors.push('Geçerli bir telefon numarası girin');
-        document.getElementById('phone')?.classList.add('error');
+        errors.push({ field: 'phone', message: 'Geçerli bir telefon numarası girin' });
+    }
+
+    if (!data.terms) {
+        errors.push({ field: 'terms', message: 'Kullanım şartlarını kabul etmelisiniz.' });
     }
     
     return errors;
 }
 
-function processPayment(data) {
-    showLoading();
+function processPayment(data, onComplete) {
+    showToast('Ödeme işleminiz doğrulanıyor...', 'info');
     
-    // Ödeme işlemi başladı bildirimi
-    showToast('Ödeme işleminiz başlatılıyor...', 'success');
-    
-    // Ödeme işlemi simülasyonu (2 saniye)
     setTimeout(() => {
-        hideLoading();
+        // Simulate API call success/failure
+        const isSuccess = Math.random() > 0.1; // 90% success rate
+
+        if (isSuccess) {
+            const orderNumber = generateOrderNumber();
+            const orderData = {
+                orderNumber,
+                items: cart.items,
+                total: cart.getTotal(),
+                customerEmail: data.email,
+                orderDate: new Date().toISOString()
+            };
+            
+            // Save order and clear cart
+            localStorage.setItem('lastOrder', JSON.stringify(orderData));
+            const allOrders = JSON.parse(localStorage.getItem('allOrders') || '[]');
+            allOrders.push(orderData);
+            localStorage.setItem('allOrders', JSON.stringify(allOrders));
+            
+            cart.clear();
+            
+            showToast('Ödeme başarılı! Onay sayfasına yönlendiriliyorsunuz.', 'success');
+            
+            setTimeout(() => {
+                window.location.href = 'siparis-onay.html';
+            }, 1500);
+
+        } else {
+            // Simulate payment failure
+            showToast('Ödeme başarısız. Bankanızla iletişime geçin.', 'error');
+            onComplete(); // Restore button state
+        }
         
-        // Sipariş numarası oluştur
-        const orderNumber = generateOrderNumber();
-        
-        // Sipariş bilgilerini kaydet
-        const orderData = {
-            orderNumber,
-            items: cart.items,
-            total: cart.getTotal(),
-            customerEmail: data.email,
-            customerPhone: data.phone,
-            orderDate: new Date().toISOString()
-        };
-        
-        localStorage.setItem('lastOrder', JSON.stringify(orderData));
-        
-        // Tüm siparişleri kaydet
-        const allOrders = JSON.parse(localStorage.getItem('allOrders') || '[]');
-        allOrders.push(orderData);
-        localStorage.setItem('allOrders', JSON.stringify(allOrders));
-        
-        // Başarı bildirimi
-        showToast('✅ Ödemeniz başarıyla onaylandı! Yönlendiriliyorsunuz...', 'success');
-        
-        // Sepeti temizle
-        cart.clear();
-        
-        // 1 saniye sonra başarı sayfasına yönlendir
-        setTimeout(() => {
-            window.location.href = 'siparis-onay.html';
-        }, 1500);
-    }, 2000);
+    }, 2500); // Increased delay for realism
 }
 
 function generateOrderNumber() {
