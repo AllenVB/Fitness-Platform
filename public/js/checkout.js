@@ -218,11 +218,10 @@ function processPayment(data, onComplete) {
             
             cart.clear();
             
-            showToast('Ödeme başarılı! Onay sayfasına yönlendiriliyorsunuz.', 'success');
+            showToast('Ödeme başarılı! Siparişiniz alındı.', 'success');
             
-            setTimeout(() => {
-                window.location.href = 'siparis-onay.html';
-            }, 1500);
+            // Display success message and hide form
+            displayPaymentSuccess();
 
         } else {
             // Simulate payment failure
@@ -231,6 +230,13 @@ function processPayment(data, onComplete) {
         }
         
     }, 2500); // Increased delay for realism
+}
+
+function displayPaymentSuccess() {
+    document.getElementById('paymentForm').classList.add('hidden');
+    document.getElementById('paymentSuccessMessage').classList.remove('hidden');
+    // Optionally, scroll to the success message
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function generateOrderNumber() {
