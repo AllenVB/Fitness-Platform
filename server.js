@@ -85,7 +85,7 @@ app.post('/api/contact', async (req, res) => {
         const values = [fullName, email, phone, message];
 
         const result = await pool.query(sql, values);
-        
+
         console.log("✅ MESAJ KAYDEDİLDİ! ID:", result.rows[0].id);
         res.json({ success: true, message: 'Mesajınız başarıyla alındı!' });
 
@@ -115,14 +115,14 @@ app.post('/api/register', async (req, res) => {
         const values = [name, email, phone, password];
 
         const result = await pool.query(sql, values);
-        
+
         console.log("✅ KAYIT BAŞARILI! ID:", result.rows[0].id);
         res.json({ success: true, message: 'Kayıt başarılı!', user: result.rows[0] });
 
     } catch (err) {
         // HATA YAKALAMA MERKEZİ
-        console.error("💥 SUNUCU HATASI:", err.message); 
-        
+        console.error("💥 SUNUCU HATASI:", err.message);
+
         if (err.code === '23505') {
             return res.status(400).json({ success: false, message: 'Bu e-posta zaten kayıtlı!' });
         }
